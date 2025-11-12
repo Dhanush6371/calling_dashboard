@@ -43,35 +43,36 @@ function App() {
   }, []);
 
   // Improved function to play notification sound
-  const playNotificationSound = useCallback(() => {
-    console.log('🔊 Attempting to play notification sound...');
+  // Improved function to play notification sound
+const playNotificationSound = useCallback(() => {
+  console.log('🔊 Attempting to play notification sound...');
+  
+  try {
+    const audio = new Audio('/Best Notification Tone.mp3');
+    audio.volume = 0.7;
     
-    try {
-      const audio = new Audio('/Best Notification Tone.mp3');
-      audio.volume = 0.7;
-      
-      audio.addEventListener('error', (e) => {
-        console.log('❌ Audio error:', e);
-        showBrowserNotification();
-      });
-      
-      const playPromise = audio.play();
-      
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('🔊 Notification sound played successfully');
-          })
-          .catch(error => {
-            console.log('❌ Audio play failed:', error);
-            playFallbackSound();
-          });
-      }
-    } catch (error) {
-      console.log('❌ Audio creation failed:', error);
-      playFallbackSound();
+    audio.addEventListener('error', (e) => {
+      console.log('❌ Audio error:', e);
+      showBrowserNotification();
+    });
+    
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          console.log('🔊 Notification sound played successfully');
+        })
+        .catch(error => {
+          console.log('❌ Audio play failed:', error);
+          playFallbackSound();
+        });
     }
-  }, [showBrowserNotification]);
+  } catch (error) {
+    console.log('❌ Audio creation failed:', error);
+    playFallbackSound();
+  }
+}, [showBrowserNotification, playFallbackSound]); // Add playFallbackSound to dependencies
 
   // Fallback sound function
   const playFallbackSound = useCallback(() => {
