@@ -111,8 +111,8 @@ function App() {
       console.log('🔄 Fetching data...');
       
       const [statsResponse, ordersResponse] = await Promise.all([
-        fetch("https://calling-server-72nx.onrender.com/api/stats"),
-        fetch("https://calling-server-72nx.onrender.com/api/orders")
+        fetch("https://1vlg5qkgm2.execute-api.us-east-1.amazonaws.com/dev/api/stats"),
+        fetch("https://1vlg5qkgm2.execute-api.us-east-1.amazonaws.com/dev/api/orders")
       ]);
       
       if (!statsResponse.ok || !ordersResponse.ok) {
